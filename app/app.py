@@ -248,8 +248,7 @@ def update_settings():
     GET: Render the settings page with the current configuration.
     POST: Extract new settings from the form, update the configuration, and redirect to the settings page.
 
-    Returns:
-        str: Rendered HTML page with the current settings.
+    :return: Rendered HTML page with the current settings.
     """
     if request.method == "POST":
         new_values = utils.extract_form_values(request)
@@ -267,8 +266,7 @@ def reset_settings():
     POST: Remove the existing config.ini file, copy the default config.example.ini to config.ini,
     and render the settings page with the default settings.
 
-    Returns:
-        str: Rendered HTML page with the current settings.
+    :return: Rendered HTML page with the current settings.
     """
     print("Current working directory:", os.getcwd())
     # Delete the existing config.ini file
@@ -290,8 +288,7 @@ def update_tesseract_path():
         - If Tesseract executable path is not set, search for the executable in all drives.
         - Update the configuration with the found path or notify the user if not found.
 
-    Returns:
-        str: Rendered HTML page with the current settings and optional message.
+    :return: Rendered HTML page with the current settings and optional message.
     """
     global cancel_search_flag
 
