@@ -242,6 +242,15 @@ def delete_video(delete_filename):
 
 @app.route("/update_settings", methods=['GET', 'POST'])
 def update_settings():
+    """
+    Handle updating of application settings.
+
+    GET: Render the settings page with the current configuration.
+    POST: Extract new settings from the form, update the configuration, and redirect to the settings page.
+
+    Returns:
+        str: Rendered HTML page with the current settings.
+    """
     if request.method == "POST":
         new_values = utils.extract_form_values(request)
         utils.update_configuration(new_values)
@@ -252,6 +261,15 @@ def update_settings():
 
 @app.route('/reset-settings', methods=['POST'])
 def reset_settings():
+    """
+    Reset the application settings to default by replacing the config.ini file.
+
+    POST: Remove the existing config.ini file, copy the default config.example.ini to config.ini,
+    and render the settings page with the default settings.
+
+    Returns:
+        str: Rendered HTML page with the current settings.
+    """
     print("Current working directory:", os.getcwd())
     # Delete the existing config.ini file
     if os.path.exists('config.ini'):
@@ -263,6 +281,18 @@ def reset_settings():
 
 @app.route('/update_tesseract_path', methods=['GET', 'POST'])
 def update_tesseract_path():
+    """
+    Handle updating of the Tesseract executable path.
+
+    GET: Render the settings page with the current configuration.
+    POST:
+        - If 'cancel_search' is in the form, set the cancel search flag and render the settings page.
+        - If Tesseract executable path is not set, search for the executable in all drives.
+        - Update the configuration with the found path or notify the user if not found.
+
+    Returns:
+        str: Rendered HTML page with the current settings and optional message.
+    """
     global cancel_search_flag
 
     if request.method == 'POST' and request.form.get('cancel_search'):
